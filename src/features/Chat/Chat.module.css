@@ -1,0 +1,17 @@
+
+
+.messageTextArea {
+    width: 100%;
+}
+
+.widget {
+    border: grey;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px;
+}
+
+.message {
+    list-style: none;
+    margin: 10px;
+}

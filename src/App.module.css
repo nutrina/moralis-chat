@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    background-color: inherit;
+    color: inherit;
+}
+
+
+.row {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.learnParagraph {
+    font-size: 1.2rem;
+}
+
+.label {
+    width: 100px;
+}
+
+.input {
+    width: 400px;
+    border: 1px solid white; 
+}
+
+.formRow {
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 2px;
+}
+
+.button {
+    border: 1px solid white; 
+    margin-top: 20px;
+    padding: 10px 20px 10px 20px;
+}
+
+.chatWindow {
+    width: 100%;
+    display: flex;
+}
+
+.channelsWindow {
+    width: 30%;
+}
+
+.msgWindow {
+    width: 70%;
+}
