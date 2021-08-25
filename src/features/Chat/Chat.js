@@ -15,6 +15,7 @@ function useChat(chatId) {
     let [messageList, setMessageList] = useState([]);
     let [messages, setMessags] = useState({});
     let [hasPermission, setHasPermission] = useState(false);
+    let [isValid, setIsValid] = useState(false);
     let [groupName, setGroupName] = useState("");
 
     async function createMessage(chatId, text) {
@@ -44,6 +45,7 @@ function useChat(chatId) {
 
             setGroupName(response.groupName);
             setHasPermission(response.hasPermission);
+            setIsValid(response.isValid);
 
         });
     }, [chatId]);
@@ -78,13 +80,15 @@ function useChat(chatId) {
         };
     }, [chatId]);
 
-    return { groupName, createMessage, messageList, hasPermission };
+    return { groupName, isValid, createMessage, messageList, hasPermission };
 }
 
 const Chat = () => {
     let { chatId } = useParams();
-    let { groupName, createMessage, messageList, hasPermission } = useChat(chatId);
+    let { groupName, createMessage, messageList, hasPermission, isValid } = useChat(chatId);
     let [messageText, setMessageText] = useState("Type your text");
+    let {user} = useMoralis();
+    let userAddress = user.get("ethAddress");
     console.log("geri chat: ", chatId);
     console.log("geri messageList: ", messageList);
     console.log("geri messageList: ", messageList[0]);
@@ -100,7 +104,12 @@ const Chat = () => {
 
     let chatContent = null;
 
-    if (hasPermission) {
+    if (!isValid) {
+        chatContent = <div>
+            <h3>Welcome to Moralis Chat</h3>
+            <div>Please select a chat group from the list or create a new one.</div>
+        </div>
+    } else if (hasPermission) {
         chatContent = <div>
             <ul>{messageList.map((msg, idx) => {
                 return <li key={idx} className={styles.message}>
@@ -114,7 +123,11 @@ const Chat = () => {
             <button onClick={handlePost}>Post</button>
         </div>
     } else {
-        chatContent = <div>Please purchase some ETH before you can access the chat</div>
+        chatContent = <div>
+            <h3>Welcome to Moralis Chat</h3>
+            <h5>You need ETH to access this chat</h5>
+            <div>Please purchase some ETH before you can access the chat</div>
+        </div>
     }
 
     return (

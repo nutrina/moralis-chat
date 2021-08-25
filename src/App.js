@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMoralis } from "react-moralis";
-import Wallet from './features/wallet/Wallet';
 import Header from './features/header/Header';
 import Groups from './features/ChatGroups/Groups';
 import Chat from './features/Chat/Chat';
@@ -45,13 +44,16 @@ function App() {
         <button className={styles.button} onClick={handleLoginWithMetamask}>Login with Metamask</button>
       </div>
     } else {
-      content = <div class={styles.chatWindow}>
-        <div class={styles.channelsWindow}>
+      content = <div className={styles.chatWindow}>
+        <div className={styles.channelsWindow}>
           <Groups />
         </div>
-        <div class={styles.msgWindow}>
+        <div className={styles.msgWindow}>
           <Switch>
             <Route path={`${match.path}:chatId`}>
+              <Chat />
+            </Route>
+            <Route path="/">
               <Chat />
             </Route>
           </Switch>

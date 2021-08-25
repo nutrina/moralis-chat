@@ -18,10 +18,7 @@ async function hasUserPermission(user) {
 }
 
 Moralis.Cloud.define("getChatMesages", async (request) => {
-    logger.info("getChatMesages: " + request.user.id);
-    logger.info("getChatMesages: " + request.user.get('ethAddress'));
     const hasPermission = await hasUserPermission(request.user);
-    logger.info("getChatMesages hasPermission: " + hasPermission);
     let results = undefined;
     if (hasPermission) {
         const query = new Moralis.Query("ChatMessage");
@@ -33,11 +30,13 @@ Moralis.Cloud.define("getChatMesages", async (request) => {
     groupQuery.equalTo("objectId", request.params.chatId);
     const groups = await groupQuery.find();
     let groupName = undefined;
+    let isValid = false;
     if(groups.length > 0) {
         groupName = groups[0].get("name");
-    }
+        isValid = true;
+    } 
 
-    return { hasPermission, results, groupName };
+    return { hasPermission, results, groupName, isValid };
 });
 
 Moralis.Cloud.beforeSubscribe('ChatMessage', request => {
@@ -46,5 +45,4 @@ Moralis.Cloud.beforeSubscribe('ChatMessage', request => {
     logger.info("beforeSubscribe json " + request.query.toJSON().toString());
     const chatId = query["where"]["chatId"];
     logger.info("beforeSubscribe request " + chatId);
-
 });

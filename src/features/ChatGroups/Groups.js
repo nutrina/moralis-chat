@@ -125,7 +125,7 @@ const Groups = () => {
     })
 
     return (
-        <div class={styles.widget}>
+        <div className={styles.widget}>
             <input name="group-name" type="text" onChange={onNameChange} />
             <button onClick={onCreateGroup}>Create Group</button>
             <ul className={styles.channelsList}>{groupList}</ul>
